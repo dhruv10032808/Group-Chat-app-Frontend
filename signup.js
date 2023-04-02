@@ -18,5 +18,11 @@ function signup(event){
       phone:phoneValue,
       password:passwordValue
     }
-    axios.post('http://localhost:3000/signup',data)
+    axios.post('http://localhost:3000/signup',data).then(res=>{
+        if(res.data.newUserDetail.errors){
+            alert(`${res.data.newUserDetail.errors[0].message}`)
+        }else{
+            alert(`${res.data.message}`)
+        }
+    })
 }
