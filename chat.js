@@ -11,13 +11,18 @@ function send(e){
     console.log(data)
     axios.post('http://localhost:3000/message',data,{headers:{'Authorization':token}}).then(res=>{
         console.log(res.data)
-        document.getElementById('msg').textContent+=res.data.message;
+        viewmessage(res.data)
     })
 }
 
 window.addEventListener('DOMContentLoaded',getmessage)
 
+setInterval(()=>{
+    getmessage()
+},1000);
+
 function getmessage(){
+    document.getElementById('msg').innerHTML='';
     axios.get('http://localhost:3000/message',{headers:{'Authorization':token}}).then(response=>{
         for(let i=0;i<response.data.length;i++){
             viewmessage(response.data[i])
