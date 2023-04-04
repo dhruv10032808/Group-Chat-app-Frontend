@@ -9,27 +9,99 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>Group chat app</title>
     <style>
-        footer{
-          position:relative;
-          bottom: 0;
-          background-color: aqua;
-          padding: 7px;
-          margin-top: 476px;
-        }
+        body{
+        background: linear-gradient(
+          to bottom,
+          rgb(0,167,131) 0%,
+          rgb(0,167,131) 10%,
+          white 10%,
+          white 100%
+        );
+        padding: 15px;
+        z-index: 0;
+      }
+      .footer{
+        position: fixed;
+        bottom: 0;
+        background-color: aqua;
+        padding: 0 15px;
+    width: 100%;
+    display: flex;
+      }
+      .footer #message{
+        width: 50%;
+        padding: 8px 15px;
+
+        border-radius: 10px;
+        color: #000;
+      }
+      .user{
+      background-color: #F0F2F5;
+        padding: 0 0 50px 10px;
+        border-right: 1px solid black;
+        height: 100vmax;
+      }
+      .message{
+        background-color:white ;
+        padding-bottom: 20px;
+      }
+      .msg{
+        background-color: #F0F2F5;
+      }
       </style>
 </head>
 <body>
-    <div class="container text-center">
-        <div style="color:rgb(93, 93, 151)"><h1>Chat App</h1></div>
-        <div id="msg"></div>
+    <div class="container-fluid " >
+        <div class="row">
+          <div class="col-4 user">
+            <h4 style="text-align: center;"><u>CHAT</u></h4>
+            <div style="margin-top:50px;margin-right:5px">
+                <div style="background-color:rgb(9, 240, 9)">
+                    <span><i>Create Group</i></span> 
+                </div>
+            <form id="form1" style="margin-top:15px"> 
+              <div class="form-group" >
+                <label for="group">Group Name</label>
+                <input type="text" class="form-control" id="group" name="group" placeholder="Enter Group Name">
+              </div>
+              <button type="submit" id="create" class="btn btn-primary" style="margin-top:10px">Create</button>
+            </form>
+
+            <form id="form2" style="margin-top:20px">
+              <div class="form-group" >
+                <label for="email">Enter Email of the user you want to add</label>
+                <input type="name" class="form-control" id="email" name="useremail"  placeholder="Enter Email ">
+              </div>
+              <button type="submit" id="add" class="btn btn-primary" style="margin-top:10px">Add To Group</button>
+            </form>
+            <h5 style="margin-top:10px;">Group List</h5>
+            <nav class="nav flex-column" id="grouplist" style="margin-top:10px;color:green">
+
+
+            </nav>
+            </div>
+          </div>
+          <div class="col-8 message p-0">
+            <div class="msg" >
+              <h4>Messages</h4>
+            </div>
+
+            <div id="chat" style="margin-left:5px">
+
+            </div>
+            <div class="footer">
+
+              <input type="text" id="message">
+              <button id="btn" style="margin-left:10px;border-radius: 10px;">Send</button>
+            </div>
+          </div>
+        </div>
 
 
     </div>
-    <footer>
-      <div class="text-center">
-        <input id="message" type="text">
-        <button id="btn">Send</button>
-      </div>
+    <footer class="container-fluid">
+
+    </footer>
 
     <script src='chat.js'></script>
 </body>
