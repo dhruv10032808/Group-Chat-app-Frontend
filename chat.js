@@ -15,7 +15,7 @@ function send(e){
     console.log(data)
     axios.post(`http://localhost:3000/message?gid=${gid}`,data,{headers:{'Authorization':token}}).then(res=>{
         console.log(res.data)
-        viewmessage(res.data)
+        document.getElementById('chat').innerHTML+=`<p>You:${res.data.message}</p>`
     })
 }
 
@@ -46,13 +46,20 @@ function getmessage(){
 function fetchMessageFromLocal(){
     document.getElementById('chat').innerHTML="";
     const msg=JSON.parse(localStorage.getItem('message'));
+    if(msg){
         for(var i=0;i<msg.length;i++){
             viewmessage(msg[i]);
         }
+    }
 }
 
 function viewmessage(msg){
-    document.getElementById('chat').innerHTML+=`<p>${msg.message}</p>`
+    const name=localStorage.getItem('name')
+    if(msg.user.name==name){
+        document.getElementById('chat').innerHTML+=`<p>You:${msg.message}</p>`
+    }else{
+    document.getElementById('chat').innerHTML+=`<p>${msg.user.name}:${msg.message}</p>`
+}
 }
 
 form1.addEventListener('submit',creategroup)
@@ -72,14 +79,15 @@ function getgroup(){
     axios.get('http://localhost:3000/getgroup',{headers:{'Authorization':token}}).then(response=>{
         response.data.group.forEach(group=>{
             const list=document.getElementById('grouplist');
-            const childhtml=`<a onclick="getgroupmessage('${group.id}')" style="cursor:pointer;">${group.groupname}</a>`
+            const childhtml=`<a onclick="getgroupmessage(${group.id},'${group.groupname}')" style="cursor:pointer;">${group.groupname}</a>`
             list.innerHTML+=childhtml;
         })
     })
 }
 
-function getgroupmessage(gid){
+function getgroupmessage(gid,gname){
     document.getElementById('chat').innerHTML='';
+    document.querySelector('.msg').innerHTML=`<h5>${gname}</h5>`;
     localStorage.setItem('gid',gid);
     axios.get(`http://localhost:3000/getgroupmessage/?gid=${gid}`,{headers:{"Authorization":token}}).then(res=>{
         res.data.message.forEach(message=>{
@@ -102,3 +110,7 @@ function joingroup(e){
         alert(response.data.message)
     }).catch(err=>console.log(err));
 }
+
+document.getElementById('details').addEventListener('click',()=>{
+    window.location.href='./grouplist.html'
+})

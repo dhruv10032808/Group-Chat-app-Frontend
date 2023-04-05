@@ -15,6 +15,7 @@ function login(event){
     axios.post('http://localhost:3000/login',data).then(res=>{
         alert(res.data.message);
         localStorage.setItem('token',res.data.token)
+        localStorage.setItem('name',res.data.name)
         window.location.href='./chat.html'
     }).catch(err=>{
         document.body.innerHTML+=`<div style="color:red">${err.message} </div>`
