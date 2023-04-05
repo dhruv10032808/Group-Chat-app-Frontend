@@ -115,3 +115,25 @@ function joingroup(e){
 document.getElementById('details').addEventListener('click',()=>{
     window.location.href='./grouplist.html'
 })
+
+async function send_image(files){
+
+    alert(files[0].name);
+    console.log(files[0]);
+    let file1=files[0];
+    const gid=localStorage.getItem('gid');
+    const data={
+        groupid:gid,
+        picture:file1
+    }
+
+    try{
+    const response=await axios.post("http://localhost:3000/chatimage",data,{headers:{"Authorization":token}})
+    console.log(response.data)
+    alert(response.data.message); //message sent success
+    }
+    catch(err){console.log(err)
+        document.body.innerHTML+=`<div style="color:red">${err.message}</div>`
+    };
+    console.log(file1);
+}
