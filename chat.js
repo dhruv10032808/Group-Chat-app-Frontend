@@ -16,6 +16,7 @@ function send(e){
     axios.post(`http://localhost:3000/message?gid=${gid}`,data,{headers:{'Authorization':token}}).then(res=>{
         console.log(res.data)
         document.getElementById('chat').innerHTML+=`<p>You:${res.data.message}</p>`
+        message.value=''
     })
 }
 
@@ -23,9 +24,9 @@ window.addEventListener('DOMContentLoaded',fetchMessageFromLocal)
 
 window.addEventListener('DOMContentLoaded',getgroup)
 
-// setInterval(()=>{
-//     getmessage()
-// },1000);
+setInterval(()=>{
+    getmessage()
+},1000);
 
 function getmessage(){
     let message=[];
